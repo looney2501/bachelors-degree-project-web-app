@@ -1,18 +1,18 @@
-import React from "react";
-import adminLayout from "../hoc/adminLayout"
+import React from 'react'
+import adminLayout from '../hoc/adminLayout'
 
 class AdminBlankPage extends React.Component {
-    constructor(props){
-        super(props);
+  constructor(props) {
+    super(props)
 
-        this.state = {}
-    }
+    this.state = {}
+  }
 
-    render(){
-        return <>
-            <p>Content here..</p>
-        </>
-    }
+  render() {
+    return <>
+      <p>Content here..</p>
+    </>
+  }
 }
 
-export default adminLayout(AdminBlankPage);
+export default adminLayout(AdminBlankPage)

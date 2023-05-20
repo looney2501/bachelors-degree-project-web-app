@@ -1,16 +1,16 @@
-import React from "react";
-import adminLayout from "../hoc/adminLayout"
+import React from 'react'
+import adminLayout from '../hoc/adminLayout'
 
 class DashboardPage extends React.Component {
-    constructor(props){
-        super(props);
+  constructor(props) {
+    super(props)
 
-        this.state = {}
-    }
+    this.state = {}
+  }
 
-    render(){
-        return <>
-            <div className="row">
+  render() {
+    return <>
+      <div className="row">
         <div className="col-xl-3 col-sm-6 mb-3">
           <div className="card text-white bg-primary o-hidden h-100">
             <div className="card-body">
@@ -76,8 +76,8 @@ class DashboardPage extends React.Component {
           </div>
         </div>
       </div>
-        </>
-    }
+    </>
+  }
 }
 
-export default adminLayout(DashboardPage);
+export default adminLayout(DashboardPage)

@@ -1,6 +1,5 @@
 .lead-primary-column p,
-.lead-primary-contact-column p
-{
+.lead-primary-contact-column p {
     padding: 0;
     margin: 0;
     font-family: var(--default-font-light);
