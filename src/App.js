@@ -11,9 +11,9 @@ import { BrowserRouter as Router, Navigate, Outlet, Route, Routes, useNavigate, 
 import { useSelector } from 'react-redux'
 
 const PrivateRoute = () => {
-  const { currentUser } = useSelector(state => state.currentUser)
+  const { isSignedIn } = useSelector(state => state.auth)
 
-  return currentUser.isSignedIn ? <Outlet /> : <Navigate replace to='/login' />
+  return isSignedIn ? <Outlet /> : <Navigate replace to='/login' />
 }
 
 function App() {
@@ -29,10 +29,11 @@ function App() {
           <Route exact path="/" element={<DashboardPage />}/>
           <Route exact path="/profile" element={<ProfilePage />}/>
           <Route exact path="/preferences" element={<UserPreferencesPage />}/>
-          <Route exact path="/typography" element={<TypographyPage />}/>
           <Route exact path="/blank-page" element={<TypographyPage />}/>
           <Route exact path="/change-password" element={<ChangePasswordPage />}/>
         </Route>
+
+        <Route exact path="/typography" element={<TypographyPage />}/>
       </Routes>
     </Router>
   )

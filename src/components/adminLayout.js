@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../common/header'
-import Sidebar from '../common/sidebar'
+import Header from './header'
+import Sidebar from './sidebar'
 import { Bars, Preloader } from 'react-preloader-icon'
 import LoadingScreen from './loading/LoadingScreen'
 

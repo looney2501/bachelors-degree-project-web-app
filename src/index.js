@@ -4,10 +4,6 @@ import { Provider } from 'react-redux'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import store from './redux/store'
-import './index.css'
-import { verifyCredentials } from './redux/redux-token-auth-config'
-
-verifyCredentials(store)
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,9 +1,9 @@
-import { combineReducers, configureStore, createStore } from '@reduxjs/toolkit'
-import { reduxTokenAuthReducer } from 'redux-token-auth'
+import { configureStore } from '@reduxjs/toolkit'
+import authReducer from './auth/authSlice'
 
 const store = configureStore({
   reducer: {
-    currentUser: reduxTokenAuthReducer,
+    auth: authReducer
   }
 })
 
