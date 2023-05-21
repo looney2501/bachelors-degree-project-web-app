@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../assets/css/login.css'
 import { Link } from 'react-router-dom'
-import authLayout from '../../hoc/authLayout'
+import authLayout from '../authLayout'
 
 class ResetPassword extends React.Component {
   constructor(props) {

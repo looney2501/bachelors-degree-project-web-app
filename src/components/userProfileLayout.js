@@ -1,6 +1,6 @@
 import React from 'react'
-import adminLayout from '../hoc/adminLayout'
-import './../assets/css/profile.css'
+import adminLayout from './adminLayout'
+import '../assets/css/profile.css'
 import { NavLink } from 'react-router-dom'
 
 const userProfileLayout = (ChildComponent) => {

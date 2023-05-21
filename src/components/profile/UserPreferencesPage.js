@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../assets/css/profile.css'
-import userProfileLayout from '../../hoc/userProfileLayout'
+import userProfileLayout from '../userProfileLayout'
 
 class UserPreferencesPage extends React.Component {
   constructor(props) {

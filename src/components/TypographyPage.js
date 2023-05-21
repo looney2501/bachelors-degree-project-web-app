@@ -1,6 +1,6 @@
 import React from 'react'
-import adminLayout from '../hoc/adminLayout'
-import ModalComponent from '../components/ModalComponent'
+import adminLayout from './adminLayout'
+import ModalComponent from './ModalComponent'
 
 class TypographyPage extends React.Component {
   constructor(props) {

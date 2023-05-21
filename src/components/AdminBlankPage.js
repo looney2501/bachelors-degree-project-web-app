@@ -1,5 +1,5 @@
 import React from 'react'
-import adminLayout from '../hoc/adminLayout'
+import adminLayout from './adminLayout'
 
 class AdminBlankPage extends React.Component {
   constructor(props) {

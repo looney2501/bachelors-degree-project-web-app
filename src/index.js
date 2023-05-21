@@ -1,13 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import { Provider } from 'react-redux'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import store from './redux/store'
+import './index.css'
+import { verifyCredentials } from './redux/redux-token-auth-config'
+
+verifyCredentials(store)
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App/>
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 )
 

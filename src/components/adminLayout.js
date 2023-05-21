@@ -1,7 +1,8 @@
 import React from 'react'
-import Header from './../common/header'
-import Sidebar from './../common/sidebar'
+import Header from '../common/header'
+import Sidebar from '../common/sidebar'
 import { Bars, Preloader } from 'react-preloader-icon'
+import LoadingScreen from './loading/LoadingScreen'
 
 const adminLayout = (ChildComponent) => {
   class AdminLayout extends React.Component {
@@ -24,11 +25,7 @@ const adminLayout = (ChildComponent) => {
 
     renderHtml() {
       if (!this.state.pageLoaded) {
-        return <div className="loading-page">
-          <div className="center">
-            <Preloader use={Bars} size={60} strokeWidth={10} strokeColor="#f7b085" duration={600}/>
-          </div>
-        </div>
+        return <LoadingScreen />
       }
 
       return <div className="d-flex" id="wrapper">
