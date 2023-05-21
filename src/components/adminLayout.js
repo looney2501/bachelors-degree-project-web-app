@@ -10,18 +10,18 @@ const adminLayout = (ChildComponent) => {
       super(props)
 
       this.state = {
-        pageLoaded: false,
+        pageLoaded: true,
         saveLeadClickEvent: ''
       }
     }
 
-    componentDidMount() {
-      setTimeout(() => {
-        this.setState(() => ({
-          pageLoaded: true
-        }))
-      }, 1000)
-    }
+    // componentDidMount() {
+    //   setTimeout(() => {
+    //     this.setState(() => ({
+    //       pageLoaded: true
+    //     }))
+    //   }, 1000)
+    // }
 
     renderHtml() {
       if (!this.state.pageLoaded) {
@@ -34,9 +34,9 @@ const adminLayout = (ChildComponent) => {
         {/* <!-- Page content wrapper--> */}
         <div className="main" id="page-content-wrapper">
           {/* <!-- Top navigation--> */}
-          <Header/>
+          {/*<Header/>*/}
           {/* <!-- Page content--> */}
-          <div className="container-fluid content-container">
+          <div className="container-fluid mt-0 content-container h-100">
             <ChildComponent {...this.props} />
           </div>
         </div>

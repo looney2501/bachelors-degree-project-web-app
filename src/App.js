@@ -11,9 +11,9 @@ import { BrowserRouter as Router, Navigate, Outlet, Route, Routes, useNavigate, 
 import { useSelector } from 'react-redux'
 
 const PrivateRoute = () => {
-  const { isSignedIn } = useSelector(state => state.auth)
+  const { currentUser } = useSelector(state => state.auth)
 
-  return isSignedIn ? <Outlet /> : <Navigate replace to='/login' />
+  return currentUser ? <Outlet /> : <Navigate replace to='/login' />
 }
 
 function App() {

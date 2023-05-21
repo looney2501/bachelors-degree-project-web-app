@@ -3,13 +3,7 @@ import { signIn } from './authActions'
 
 const initialState = {
   isLoading: false,
-  isSignedIn: false,
-  currentUser: {
-    email: '',
-    firstName: '',
-    lastName: '',
-    type: '',
-  },
+  currentUser: undefined,
   error: null,
 }
 
@@ -26,8 +20,6 @@ const authSlice = createSlice({
     [signIn.fulfilled]: (state, { payload }) => {
       state.isLoading = false
       state.currentUser = payload.data
-      state.isSignedIn = true
-
     },
     [signIn.rejected]: (state, { payload }) => {
       state.isLoading = false

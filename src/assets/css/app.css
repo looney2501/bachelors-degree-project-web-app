@@ -73,6 +73,7 @@ ul ul a {
 .main {
     margin-left: 200px; /* Same as the width of the sidebar */
     padding: 0px 10px;
+    height: 100vh;
 }
 
 .fixed-top {

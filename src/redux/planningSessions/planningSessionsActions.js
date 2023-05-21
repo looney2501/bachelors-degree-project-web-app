@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axiosInstance from '../../axios'
 
-export const signIn = createAsyncThunk(
-  'auth/login',
-  async ({ email, password }, { rejectWithValue }) => {
+export const getPlanningSessionsAllYears = createAsyncThunk(
+  'planningSessions/getAllYears',
+  async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post(
-        `/auth/sign_in`,
-        { email, password },
+      const { data } = await axiosInstance.get(
+        '/planning_sessions',
+        { params: { mode: 'years' } }
       )
 
       return data

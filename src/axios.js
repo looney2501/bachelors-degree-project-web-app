@@ -6,15 +6,13 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.response.use(function (response) {
-  console.log(response.headers)
-  if (response.headers['access-token']) {
+  if (response.config.url === '/auth/sign_in' && response.headers['access-token']) {
     const authHeaders = {
       'access-token': response.headers['access-token'],
       'client': response.headers['client'],
       'uid': response.headers['uid'],
     }
-    console.log('pula')
-    sessionStorage.setItem('vacations_planner', JSON.stringify(authHeaders))
+    localStorage.setItem('vacations_planner', JSON.stringify({ authHeaders, currentUser: { ...response.data.data } }))
   }
   return response
 }, function (error) {
@@ -23,13 +21,16 @@ axiosInstance.interceptors.response.use(function (response) {
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const authState = JSON.parse(sessionStorage.getItem('vacations_planner'))
+    const localState = localStorage.getItem('vacations_planner')
+    if (localState) {
+      const authState = JSON.parse(localState)['authHeaders']
 
-    config.headers = {
-      ...config.headers,
-      'access-token': authState['access-token'],
-      'client': authState['client'],
-      'uid': authState['uid'],
+      config.headers = {
+        ...config.headers,
+        'access-token': authState['access-token'],
+        'client': authState['client'],
+        'uid': authState['uid'],
+      }
     }
 
     return config
