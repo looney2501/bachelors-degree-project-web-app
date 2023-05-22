@@ -1,6 +1,6 @@
 import 'font-awesome/css/font-awesome.min.css'
 import './assets/css/app.css'
-import DashboardPage from './components/DashboardPage'
+import DashboardPage from './components/dashboard/DashboardPage'
 import TypographyPage from './components/TypographyPage'
 import LoginPage from './components/auth/LoginPage'
 import ResetPassword from './components/auth/ResetPassword'

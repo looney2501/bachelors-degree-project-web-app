@@ -29,16 +29,9 @@ const adminLayout = (ChildComponent) => {
       }
 
       return <div className="d-flex" id="wrapper">
-        {/* <!-- Sidebar--> */}
         <Sidebar/>
-        {/* <!-- Page content wrapper--> */}
         <div className="main" id="page-content-wrapper">
-          {/* <!-- Top navigation--> */}
-          {/*<Header/>*/}
-          {/* <!-- Page content--> */}
-          <div className="container-fluid mt-0 content-container h-100">
-            <ChildComponent {...this.props} />
-          </div>
+          <ChildComponent {...this.props} />
         </div>
       </div>
     }

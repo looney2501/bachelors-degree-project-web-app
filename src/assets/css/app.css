@@ -72,7 +72,7 @@ ul ul a {
 /* Style page content */
 .main {
     margin-left: 200px; /* Same as the width of the sidebar */
-    padding: 0px 10px;
+    padding: 40px 20px;
     height: 100vh;
 }
 
@@ -405,8 +405,8 @@ button {
     background-color: var(--blue-dark) !important;
 }
 
-.bg-body h6 {
-    color: var(--secondary-color);
+.bg-body {
+    color: var(--blue-normal);
 }
 
 .text-default {
@@ -601,6 +601,7 @@ table tbody tr:focus-within, table tbody tr:hover {
 .table-container {
     margin-top: 10px !important;
     display: inline-block;
+    max-height: 500px;
 }
 
 .low-height-btn {
@@ -625,4 +626,10 @@ table tbody tr:focus-within, table tbody tr:hover {
 
 .modal.left .modal-body, .modal.right .modal-body {
     padding: 15px 15px 15px;
+}
+
+/* Dashboard page */
+
+.year-form-select {
+    max-width: fit-content;
 }
