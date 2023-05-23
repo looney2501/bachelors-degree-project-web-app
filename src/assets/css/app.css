@@ -601,7 +601,6 @@ table tbody tr:focus-within, table tbody tr:hover {
 .table-container {
     margin-top: 10px !important;
     display: inline-block;
-    max-height: 500px;
 }
 
 .low-height-btn {
@@ -632,4 +631,8 @@ table tbody tr:focus-within, table tbody tr:hover {
 
 .year-form-select {
     max-width: fit-content;
+}
+
+.employees-table {
+    max-height: 500px;
 }

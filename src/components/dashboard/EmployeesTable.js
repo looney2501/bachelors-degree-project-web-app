@@ -3,9 +3,9 @@ import React from 'react'
 
 const EmployeesTable = ({ employees }) => {
   return (
-    <div id="employeesTable" className="bg-body rounded shadow-sm p-3">
+    <div className="bg-body rounded shadow-sm p-3 overflow-auto">
       <h5 className="pb-2 m-0">Angajati departament</h5>
-      <div className="table-container overflow-auto">
+      <div className="employees-table table-container overflow-auto">
         <div className="d-flex text-muted overflow-auto">
           <table className="table overflow-auto">
             <thead>

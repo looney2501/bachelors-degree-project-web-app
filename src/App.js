@@ -7,7 +7,7 @@ import ResetPassword from './components/auth/ResetPassword'
 import ProfilePage from './components/profile/ProfilePage'
 import ChangePasswordPage from './components/profile/ChangePasswordPage'
 import UserPreferencesPage from './components/profile/UserPreferencesPage'
-import { BrowserRouter as Router, Navigate, Outlet, Route, Routes, useNavigate, } from 'react-router-dom'
+import { BrowserRouter as Router, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const PrivateRoute = () => {
