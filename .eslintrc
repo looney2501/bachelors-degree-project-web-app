@@ -1,0 +1,6 @@
+{
+  "rules": {
+    // Other ESLint rules...
+    "no-console": "off"
+  }
+}

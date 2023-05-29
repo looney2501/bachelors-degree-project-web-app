@@ -1,14 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import adminLayout from '../adminLayout'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPlanningSessionsAllYears } from '../../redux/planningSessions/planningSessionsActions'
-import EmployeesTableRow from './EmployeesTableRow'
+import { getPlanningSessionsAllYears, getPlanningSessionAllVacationsByYear } from '../../redux/planningSessions/planningSessionsActions'
 import EmployeesTable from './EmployeesTable'
 import Calendar from '../calendar/Calendar'
+import moment from 'moment'
 
 const DashboardPage = () => {
   const dispatch = useDispatch()
   const allYears = useSelector(state => state.planningSessions.years)
+  const planningSession = useSelector(state => state.planningSessions.planningSession)
+  const isGenerated = useSelector(state => state.planningSessions.isGenerated)
   const employees = useMemo(() => [
     {
       id: 1,
@@ -90,19 +92,27 @@ const DashboardPage = () => {
     },
   ])
 
-  const [selectedYear, setSelectedYear] = useState(2023)
+  const [selectedYear, setSelectedYear] = useState()
+
 
   useEffect(() => {
     dispatch(getPlanningSessionsAllYears())
-      .then(() => setSelectedYear(allYears[0]))
   }, [])
+
+  useEffect(() => {
+    setSelectedYear(allYears[0])
+  }, [allYears])
 
   const handleYearSelect = (e) => {
     setSelectedYear(e.target.value)
   }
 
+  const handleViewPlanning = (_) => {
+    dispatch(getPlanningSessionAllVacationsByYear(selectedYear))
+  }
+
   return (
-    <div id="dashboardPage" className='h-100'>
+    <div id="dashboardPage" className="h-100">
       <div className="row h-100">
         <div className="col-4 h-100 d-flex flex-column justify-content-center">
           <div className="d-flex justify-content-center">
@@ -119,16 +129,32 @@ const DashboardPage = () => {
             <button
               type="button"
               className="btn btn-primary btn-md"
-              >
-              Vizualizati Planificari
+              onClick={handleViewPlanning}
+            >
+              Vizualizati Planificare
             </button>
           </div>
           <div className="mt-4 d-flex justify-content-center">
-            <EmployeesTable employees={employees} />
+            <EmployeesTable employees={employees}/>
           </div>
         </div>
-        <div className="col-8 h-100 d-flex flex-column">
-            <Calendar year={selectedYear} />
+        <div className="col-8 h-100 d-flex flex-column justify-content-center">
+          {planningSession ?
+            isGenerated ? (
+              <Calendar year={selectedYear} planningSession={planningSession} />
+            ) : (
+              <div className="">
+                <p className="h3 text-center">Planificarea nu a fost inca generata!</p>
+                <div className="mt-4 d-flex justify-content-center">
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-md"
+                  >
+                    Genereza planificare
+                  </button>
+                </div>
+              </div>
+            ) : null}
         </div>
       </div>
     </div>

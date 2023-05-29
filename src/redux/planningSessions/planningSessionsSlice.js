@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getPlanningSessionsAllYears } from './planningSessionsActions'
+import { getPlanningSessionAllVacationsByYear, getPlanningSessionsAllYears } from './planningSessionsActions'
 
 const initialState = {
   isLoading: false,
   years: [],
   error: null,
+  planningSession: null,
+  isGenerated: false,
 }
 
 const planningSessionsSlice = createSlice({
@@ -18,6 +20,12 @@ const planningSessionsSlice = createSlice({
     },
     [getPlanningSessionsAllYears.rejected]: (state, { payload }) => {
       state.error = payload
+    },
+
+    // Get all vacations by year
+    [getPlanningSessionAllVacationsByYear.fulfilled]: (state, { payload }) => {
+      state.planningSession = payload.planningSession
+      state.isGenerated = payload.planningSession.vacations.length > 0
     },
   }
 })

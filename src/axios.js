@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { deserialize } from './utils/serializationUtils'
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -14,6 +15,7 @@ axiosInstance.interceptors.response.use(function (response) {
     }
     localStorage.setItem('vacations_planner', JSON.stringify({ authHeaders, currentUser: { ...response.data.data } }))
   }
+  response.data = deserialize(response.data)
   return response
 }, function (error) {
   return Promise.reject(error)

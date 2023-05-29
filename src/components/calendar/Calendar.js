@@ -3,8 +3,9 @@ import moment from 'moment'
 import { getWeekdaysShort } from '../../utils/calendarUtils'
 import '../../assets/css/Calendar.scss'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
+import classNames from 'classnames'
 
-const Calendar = ({ isEditable, year }) => {
+const Calendar = ({ isEditable, year, planningSession }) => {
   const weekdaysShort = useMemo(() => getWeekdaysShort(), [])
 
   const [selectedDay, setSelectedDay] = useState(moment())
@@ -14,6 +15,14 @@ const Calendar = ({ isEditable, year }) => {
     setSelectedMonth(moment().year(year).month(0).date(1))
     setSelectedDay(moment().year(year).month(0).date(1))
   }, [])
+
+  const isWeekendDay = (day) => {
+    const year = selectedMonth.year()
+    const month = selectedMonth.month()
+    const targetDate = moment({ year, month, date: day });
+
+    return targetDate.day() === 0 || targetDate.day() === 6;
+  }
 
   const firstDayOfMonth = useCallback(() => {
     return (Number.parseInt(selectedMonth
@@ -40,7 +49,10 @@ const Calendar = ({ isEditable, year }) => {
     let daysInMonth = []
     for (let d = 1; d <= noDaysInMonth(); d++) {
       daysInMonth.push(
-        <td key={d} className={`${isEditable && d.toString() === selectedDay.format('D') && selectedMonth.format('M Y') === selectedDay.format('M Y') ? 'selected' : ''}`}>
+        <td key={d} className={classNames({
+          selected: isEditable && d.toString() === selectedDay.format('D') && selectedMonth.format('M Y') === selectedDay.format('M Y'),
+          weekend: isWeekendDay(d)
+        })}>
           <div className='calendar-day-wrapper' onClick={isEditable && (() => setSelectedDay(moment(selectedMonth.date(d)))) }>
             <div className='calendar-day'>
               <div className='calendar-day-circle'>
