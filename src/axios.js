@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { deserialize } from './utils/serializationUtils'
+import { deserialize, serialize } from './utils/serializationUtils'
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -34,6 +34,8 @@ axiosInstance.interceptors.request.use(
         'uid': authState['uid'],
       }
     }
+
+    config.data = serialize(config.data)
 
     return config
   },

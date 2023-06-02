@@ -11,7 +11,7 @@ import moment from 'moment'
 import ModalComponent from '../ModalComponent'
 import NewPlanningSessionModal from './NewPlanningSessionModal'
 
-const DashboardPage = () => {
+const ManagerDashboardPage = () => {
   const dispatch = useDispatch()
   const allYears = useSelector(state => state.planningSessions.years)
   const planningSession = useSelector(state => state.planningSessions.planningSession)
@@ -98,8 +98,6 @@ const DashboardPage = () => {
   ], [])
 
   const [selectedYear, setSelectedYear] = useState()
-  const [viewInitialiseSessionModal, setViewInitialiseSessionModal] = useState(false)
-
 
   useEffect(() => {
     dispatch(getPlanningSessionsAllYears())
@@ -118,12 +116,10 @@ const DashboardPage = () => {
   }
 
   const nextYearWithoutPlanningSession = useMemo(() => {
-    return allYears[0] !== moment().year() + 1
+    return allYears.length > 0
+      && allYears[0] !== moment().year() + 1
+      // && moment().month() === 11
   }, [allYears])
-
-  const handleInitialisePlanningSession = () => {
-
-  }
 
   return (
     <>
@@ -189,4 +185,4 @@ const DashboardPage = () => {
   )
 }
 
-export default adminLayout(DashboardPage)
+export default adminLayout(ManagerDashboardPage)

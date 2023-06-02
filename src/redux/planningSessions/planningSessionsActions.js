@@ -45,4 +45,24 @@ export const getPlanningSessionAllVacationsByYear = createAsyncThunk(
   }
 )
 
-// export
+export const createNewPlanningSession = createAsyncThunk(
+  'planningSessions/createNewPlanningSession',
+  async ({ year, availableFreeDays, restrictionIntervals }, { rejectWithValue }) => {
+    try {
+      await axiosInstance.post(
+        baseUrl,
+        {
+          year,
+          availableFreeDays,
+          restrictionIntervals
+        }
+      )
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
