@@ -72,7 +72,7 @@ ul ul a {
 /* Style page content */
 .main {
     margin-left: 200px; /* Same as the width of the sidebar */
-    padding: 40px 20px;
+    padding: 20px;
     height: 100vh;
 }
 
@@ -488,7 +488,7 @@ button {
 
 .modal-header .btn-close {
     background: transparent !important;
-    color: var(--secondary-color);
+    color: var(--white);
     font-size: 22px;
 }
 
