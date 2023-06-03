@@ -1,15 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import adminLayout from '../adminLayout'
+import dashboardLayout from '../../layout/dashboardLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getPlanningSessionsAllYears,
   getPlanningSessionAllVacationsByYear
-} from '../../redux/planningSessions/planningSessionsActions'
+} from '../../../redux/planningSessions/planningSessionsActions'
 import EmployeesTable from './EmployeesTable'
-import Calendar from '../calendar/Calendar'
+import Calendar from '../../calendar/Calendar'
 import moment from 'moment'
-import ModalComponent from '../ModalComponent'
-import NewPlanningSessionModal from './NewPlanningSessionModal'
+import NewPlanningSessionModal from '../../modal/NewPlanningSessionModal'
 
 const ManagerDashboardPage = () => {
   const dispatch = useDispatch()
@@ -104,7 +103,9 @@ const ManagerDashboardPage = () => {
   }, [])
 
   useEffect(() => {
-    setSelectedYear(allYears[0])
+    if (allYears) {
+      setSelectedYear(allYears[0])
+    }
   }, [allYears])
 
   const handleYearSelect = (e) => {
@@ -116,22 +117,23 @@ const ManagerDashboardPage = () => {
   }
 
   const nextYearWithoutPlanningSession = useMemo(() => {
-    return allYears.length > 0
-      && allYears[0] !== moment().year() + 1
+    if (allYears) {
+      return ((allYears.length > 0 && allYears[0] !== moment().year() + 1) || allYears.length === 0)
       // && moment().month() === 11
+    }
   }, [allYears])
 
   return (
     <>
-      <NewPlanningSessionModal id="initialisePlanningSessionModal" />
-      <div id="dashboardPage" className="h-100 d-flex flex-column">
+      <NewPlanningSessionModal id="initialisePlanningSessionModal"/>
+      <div id="managerDashboardPage" className="h-100 d-flex flex-column">
         {nextYearWithoutPlanningSession && (
           <div className="row">
             <div className="alert alert-primary alert-dismissible fade show" role="alert">
-              Este momentul planificarii concediilor pentru anul urmator! Click
+              Este momentul planificării concediilor pentru anul urmator! Click
               <span data-bs-toggle="modal" data-bs-target="#initialisePlanningSessionModal"
                     className="alert-link" role="button"> aici </span>
-              pentru a initializa o noua sesiune de planificari de concedii.
+              pentru a inițializa o nouă sesiune de planificări de concedii.
               <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           </div>
@@ -142,7 +144,7 @@ const ManagerDashboardPage = () => {
               <p className="h3 mb-0 mx-4 lh-base text-right">Selectati anul</p>
               <select className="form-select year-form-select" onChange={handleYearSelect}>
                 <option disabled>Alegeti Anul</option>
-                {allYears.map(y => (
+                {allYears && allYears.map(y => (
                   <option key={y} value={y}>{y}</option>
                 ))
                 }
@@ -185,4 +187,4 @@ const ManagerDashboardPage = () => {
   )
 }
 
-export default adminLayout(ManagerDashboardPage)
+export default dashboardLayout(ManagerDashboardPage)

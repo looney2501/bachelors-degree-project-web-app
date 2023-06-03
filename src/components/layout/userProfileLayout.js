@@ -1,6 +1,6 @@
 import React from 'react'
-import adminLayout from './adminLayout'
-import '../assets/css/profile.css'
+import dashboardLayout from './dashboardLayout'
+import '../../assets/css/profile.css'
 import { NavLink } from 'react-router-dom'
 
 const userProfileLayout = (ChildComponent) => {
@@ -70,7 +70,7 @@ const userProfileLayout = (ChildComponent) => {
     }
   }
 
-  return adminLayout(UserProfilePageHoc)
+  return dashboardLayout(UserProfilePageHoc)
 }
 
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../../assets/css/login.css'
-import authLayout from '../authLayout'
+import authLayout from '../layout/authLayout'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../redux/auth/authActions'
 import { useNavigate } from 'react-router-dom'

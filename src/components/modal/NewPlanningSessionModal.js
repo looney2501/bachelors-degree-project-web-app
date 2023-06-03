@@ -1,6 +1,6 @@
-import ModalComponent from '../ModalComponent'
+import ModalComponent from './ModalComponent'
 import React, { useMemo, useState } from 'react'
-import RestrictionIntervalPicker from './RestrictionIntervalPicker'
+import RestrictionIntervalsPicker from './RestrictionIntervalsPicker'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewPlanningSession } from '../../redux/planningSessions/planningSessionsActions'
@@ -44,7 +44,7 @@ const NewPlanningSessionModal = (props) => {
 
         <div className="mb-3">
           <label htmlFor="freeDaysNumberInput" className="form-label">Intervale de restricție</label>
-          <RestrictionIntervalPicker intervals={restrictionIntervals} setIntervals={setRestrictionIntervals}/>
+          <RestrictionIntervalsPicker intervals={restrictionIntervals} setIntervals={setRestrictionIntervals}/>
           <div id="freeDaysNumberHelp" className="form-text">Introduceți intervale de timp în care doar un anumit număr
             de angajați își pot luat concediu în același timp
           </div>

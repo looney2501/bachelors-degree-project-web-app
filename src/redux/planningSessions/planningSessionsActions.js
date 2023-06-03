@@ -45,11 +45,36 @@ export const getPlanningSessionAllVacationsByYear = createAsyncThunk(
   }
 )
 
+export const getPlanningSessionThinByYear = createAsyncThunk(
+  'planningSessions/getPlanningSessionThinByYear',
+  async (year, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `${baseUrl}`,
+        {
+          params: {
+            mode: 'single_thin_details',
+            year: year
+          }
+        }
+      )
+
+      return data
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
 export const createNewPlanningSession = createAsyncThunk(
   'planningSessions/createNewPlanningSession',
   async ({ year, availableFreeDays, restrictionIntervals }, { rejectWithValue }) => {
     try {
-      await axiosInstance.post(
+      const { data } = await axiosInstance.post(
         baseUrl,
         {
           year,
@@ -57,6 +82,8 @@ export const createNewPlanningSession = createAsyncThunk(
           restrictionIntervals
         }
       )
+
+      return data
     } catch (error) {
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data)

@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-const RestrictionIntervalPicker = ({ intervals, setIntervals }) => {
+const RestrictionIntervalsPicker = ({ intervals, setIntervals }) => {
   const handleDateChange = (e, i, type) => {
     setIntervals([
       ...intervals.slice(0, i), // Copy elements before the updated object
@@ -71,4 +71,4 @@ const RestrictionIntervalPicker = ({ intervals, setIntervals }) => {
   )
 }
 
-export default RestrictionIntervalPicker
+export default RestrictionIntervalsPicker

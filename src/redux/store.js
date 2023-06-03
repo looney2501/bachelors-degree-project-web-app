@@ -23,7 +23,7 @@ const selectState = () => {
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    planningSessions: planningSessionsReducer
+    planningSessions: planningSessionsReducer,
   },
   preloadedState: selectState()
 })

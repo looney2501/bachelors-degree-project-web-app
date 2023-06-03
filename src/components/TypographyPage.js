@@ -1,6 +1,6 @@
 import React from 'react'
-import adminLayout from './adminLayout'
-import ModalComponent from './ModalComponent'
+import dashboardLayout from './layout/dashboardLayout'
+import ModalComponent from './modal/ModalComponent'
 
 class TypographyPage extends React.Component {
   constructor(props) {
@@ -1035,4 +1035,4 @@ class TypographyPage extends React.Component {
   }
 }
 
-export default adminLayout(TypographyPage)
+export default dashboardLayout(TypographyPage)

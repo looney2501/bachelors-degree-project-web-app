@@ -1,10 +1,8 @@
 import React from 'react'
-import Header from './header'
 import Sidebar from './sidebar'
-import { Bars, Preloader } from 'react-preloader-icon'
-import LoadingScreen from './loading/LoadingScreen'
+import LoadingScreen from '../loading/LoadingScreen'
 
-const adminLayout = (ChildComponent) => {
+const dashboardLayout = (ChildComponent) => {
   class AdminLayout extends React.Component {
     constructor(props) {
       super(props)
@@ -61,4 +59,4 @@ const adminLayout = (ChildComponent) => {
   return AdminLayout
 }
 
-export default adminLayout
+export default dashboardLayout

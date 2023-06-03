@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../assets/css/profile.css'
-import userProfileLayout from '../userProfileLayout'
+import userProfileLayout from '../layout/userProfileLayout'
 
 class ProfilePage extends React.Component {
   constructor(props) {

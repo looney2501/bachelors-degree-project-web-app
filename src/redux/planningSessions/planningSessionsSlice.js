@@ -2,15 +2,17 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   createNewPlanningSession,
   getPlanningSessionAllVacationsByYear,
-  getPlanningSessionsAllYears
+  getPlanningSessionsAllYears, getPlanningSessionThinByYear
 } from './planningSessionsActions'
+import { createNewVacationRequest } from './vacationRequestsActions'
 
 const initialState = {
   isLoading: false,
-  years: [],
+  years: null,
   error: null,
   planningSession: null,
   isGenerated: false,
+  hasRequested: true,
 }
 
 const planningSessionsSlice = createSlice({
@@ -26,6 +28,12 @@ const planningSessionsSlice = createSlice({
       state.error = payload
     },
 
+    // Get thin details by year
+    [getPlanningSessionThinByYear.fulfilled]: (state, { payload }) => {
+      state.planningSession = payload.planningSession
+      state.hasRequested = payload.hasRequested
+    },
+
     // Get all vacations by year
     [getPlanningSessionAllVacationsByYear.fulfilled]: (state, { payload }) => {
       state.planningSession = payload.planningSession
@@ -36,13 +44,29 @@ const planningSessionsSlice = createSlice({
     [createNewPlanningSession.pending]: (state, _) => {
       state.isLoading = true
     },
-    [createNewPlanningSession.fulfilled]: (state, _) => {
+    [createNewPlanningSession.fulfilled]: (state, { payload }) => {
       state.isLoading = false
       state.error = null
+      state.years.push(payload.planningSession.year)
     },
     [createNewPlanningSession.rejected]: (state, { payload }) => {
       state.isLoading = false
       state.error = payload
+    },
+
+    // Create new vacation request
+    [createNewVacationRequest.pending]: (state, _) => {
+      state.isLoading = true
+    },
+    [createNewVacationRequest.fulfilled]: (state, _) => {
+      state.isLoading = false
+      state.error = null
+      state.hasRequested = true
+    },
+    [createNewVacationRequest.rejected]: (state, { payload }) => {
+      state.isLoading = false
+      state.error = payload
+      state.hasRequested = false
     },
   }
 })
