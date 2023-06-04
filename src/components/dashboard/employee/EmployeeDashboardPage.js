@@ -47,9 +47,6 @@ const EmployeeDashboardPage = () => {
     }
   }, [allYears, hasRequested])
 
-  console.log(allYears)
-  console.log(hasRequested)
-
   return (
     <>
       <NewVacationRequestModal id="vacationRequestModal" />
