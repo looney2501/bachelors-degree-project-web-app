@@ -28,9 +28,12 @@ export const getPlanningSessionAllVacationsByYear = createAsyncThunk(
   async (year, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `${baseUrl}/all_vacations_by_year`,
+        baseUrl,
         {
-          params: { year: year }
+          params: {
+            mode: 'by_year_all_vacations',
+            year: year
+          }
         }
       )
 
@@ -50,10 +53,10 @@ export const getPlanningSessionThinByYear = createAsyncThunk(
   async (year, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `${baseUrl}`,
+        baseUrl,
         {
           params: {
-            mode: 'single_thin_details',
+            mode: 'by_year_thin_details',
             year: year
           }
         }
@@ -95,7 +98,7 @@ export const createNewPlanningSession = createAsyncThunk(
 )
 
 export const generateVacationsSchedule = createAsyncThunk(
-  'planningSessions/createNewPlanningSession',
+  'planningSessions/generateVacationSchedule',
   async (id, { rejectWithValue }) => {
     try {
       console.log(id)

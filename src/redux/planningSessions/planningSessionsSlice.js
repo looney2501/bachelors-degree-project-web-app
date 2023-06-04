@@ -45,6 +45,7 @@ const planningSessionsSlice = createSlice({
       state.isLoading = true
     },
     [createNewPlanningSession.fulfilled]: (state, { payload }) => {
+      console.log('plm')
       state.isLoading = false
       state.error = null
       state.years.push(payload.planningSession.year)

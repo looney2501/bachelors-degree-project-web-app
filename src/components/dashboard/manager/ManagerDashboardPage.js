@@ -169,12 +169,12 @@ const ManagerDashboardPage = () => {
             </div>
           </div>
           <div className="col-8 h-100 d-flex flex-column justify-content-center">
-            {planningSession ?
+            {planningSession?.vacations ?
               isGenerated ? (
                 <Calendar year={selectedYear} planningSession={planningSession}/>
               ) : (
                 <div className="">
-                  <p className="h3 text-center">Planificarea nu a fost inca generata!</p>
+                  <p className="h3 text-center">Planificarea nu a fost încă generată!</p>
                   <div className="mt-4 d-flex justify-content-center">
                     <button
                       type="button"

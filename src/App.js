@@ -25,7 +25,7 @@ function App() {
 
         {/* Protected routes */}
         <Route element={<PrivateRoute />}>
-          <Route exact path="/" element={currentUser.type === 'Manager' ? <ManagerDashboardPage /> : <EmployeeDashboardPage />}/>
+          <Route exact path="/" element={currentUser?.type === 'Manager' ? <ManagerDashboardPage /> : <EmployeeDashboardPage />}/>
           <Route exact path="/profile" element={<ProfilePage />}/>
           <Route exact path="/blank-page" element={<TypographyPage />}/>
         </Route>
