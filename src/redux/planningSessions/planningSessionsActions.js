@@ -93,3 +93,23 @@ export const createNewPlanningSession = createAsyncThunk(
     }
   }
 )
+
+export const generateVacationsSchedule = createAsyncThunk(
+  'planningSessions/createNewPlanningSession',
+  async (id, { rejectWithValue }) => {
+    try {
+      console.log(id)
+      const { data } = await axiosInstance.post(
+        `${baseUrl}/${id}/generate_vacations_schedule`
+      )
+
+      return data
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)

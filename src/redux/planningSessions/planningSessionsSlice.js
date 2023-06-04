@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  createNewPlanningSession,
+  createNewPlanningSession, generateVacationsSchedule,
   getPlanningSessionAllVacationsByYear,
   getPlanningSessionsAllYears, getPlanningSessionThinByYear
 } from './planningSessionsActions'
@@ -68,6 +68,16 @@ const planningSessionsSlice = createSlice({
       state.error = payload
       state.hasRequested = false
     },
+
+    // Generate vacations schedule
+    [generateVacationsSchedule.pending]: (state, { _ }) => {
+      state.isLoading = true
+    },
+    [generateVacationsSchedule.fulfilled]: (state, { payload }) => {
+      state.isLoading = true
+      state.planningSession = payload.planningSession
+      state.isGenerated = payload.planningSession.vacations.length > 0
+    }
   }
 })
 

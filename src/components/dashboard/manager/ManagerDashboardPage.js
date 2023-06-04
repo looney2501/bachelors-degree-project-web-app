@@ -3,7 +3,7 @@ import dashboardLayout from '../../layout/dashboardLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getPlanningSessionsAllYears,
-  getPlanningSessionAllVacationsByYear
+  getPlanningSessionAllVacationsByYear, generateVacationsSchedule
 } from '../../../redux/planningSessions/planningSessionsActions'
 import EmployeesTable from './EmployeesTable'
 import Calendar from '../../calendar/Calendar'
@@ -116,6 +116,11 @@ const ManagerDashboardPage = () => {
     dispatch(getPlanningSessionAllVacationsByYear(selectedYear))
   }
 
+  const handleGeneratePlanning = (_) => {
+    console.log(planningSession.id)
+    dispatch(generateVacationsSchedule(planningSession.id))
+  }
+
   const nextYearWithoutPlanningSession = useMemo(() => {
     if (allYears) {
       return ((allYears.length > 0 && allYears[0] !== moment().year() + 1) || allYears.length === 0)
@@ -156,7 +161,7 @@ const ManagerDashboardPage = () => {
                 className="btn btn-primary btn-md"
                 onClick={handleViewPlanning}
               >
-                Vizualizati Planificare
+                Vizualizați planificare
               </button>
             </div>
             <div className="mt-4 d-flex justify-content-center">
@@ -174,8 +179,9 @@ const ManagerDashboardPage = () => {
                     <button
                       type="button"
                       className="btn btn-primary btn-md"
+                      onClick={handleGeneratePlanning}
                     >
-                      Genereza planificare
+                      Generează planificare
                     </button>
                   </div>
                 </div>
