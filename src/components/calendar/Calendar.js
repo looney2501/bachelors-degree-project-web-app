@@ -11,6 +11,8 @@ const Calendar = ({ isEditable, year, planningSession }) => {
   const [selectedDay, setSelectedDay] = useState(moment())
   const [selectedMonth, setSelectedMonth] = useState(moment())
 
+  console.log(year)
+
   useEffect(() => {
     setSelectedMonth(moment().year(year).month(0).date(1))
     setSelectedDay(moment().year(year).month(0).date(1))

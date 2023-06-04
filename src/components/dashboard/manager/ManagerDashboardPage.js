@@ -169,7 +169,7 @@ const ManagerDashboardPage = () => {
             </div>
           </div>
           <div className="col-8 h-100 d-flex flex-column justify-content-center">
-            {planningSession?.vacations ?
+            {selectedYear && planningSession?.vacations ?
               isGenerated ? (
                 <Calendar year={selectedYear} planningSession={planningSession}/>
               ) : (
