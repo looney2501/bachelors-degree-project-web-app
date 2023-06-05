@@ -52,25 +52,43 @@
           flex-direction: column;
           cursor: pointer;
 
-          .calendar-day {
-            flex: 0 1 25px;
-            text-align: left;
-            color: var(--blue-normal);
-            padding-left: 5px;
-            padding-top: 5px;
-            font-size: 13px;
-            font-weight: 500;
-            user-select: none;
+          .calendar-day-header {
+            display: flex;
+            height: 30px;
+
+            .calendar-day {
+              flex: 0 1;
+              text-align: left;
+              color: var(--blue-dark);
+              padding-left: 5px;
+              padding-top: 5px;
+              font-size: 13px;
+              font-weight: 500;
+              user-select: none;
+            }
+
+            .national-free-day-name {
+              color: var(--blue-dark) !important;
+              padding-left: 5px;
+              padding-top: 5px;
+              font-size: 13px;
+              font-weight: 500;
+              user-select: none;
+              text-align: left;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
           }
 
-          .calendar-day-events {
+          .vacation-day-people {
             flex: 1 0;
             padding-top: 1px;
 
-            .calendar-day-event-list {
+            .vacation-day-people-list {
               margin: 0 5%;
 
-              .calendar-day-event {
+              .vacation-day-person {
                 border: 1px solid var(--blue-normal);
                 border-radius: 15px;
                 padding-left: 5px;
@@ -83,7 +101,7 @@
               }
             }
 
-            .calendar-day-more-events {
+            .vacation-day-more-people {
               margin: 0 10%;
               font-weight: 600;
               font-size: 13px;
@@ -122,6 +140,10 @@
 
       td.weekend {
         background-color: var(--light-blue);
+      }
+
+      td.national-free-day {
+        background-color: var(--light-green);
       }
     }
   }

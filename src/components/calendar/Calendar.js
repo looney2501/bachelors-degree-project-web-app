@@ -11,8 +11,6 @@ const Calendar = ({ isEditable, year, planningSession }) => {
   const [selectedDay, setSelectedDay] = useState(moment())
   const [selectedMonth, setSelectedMonth] = useState(moment())
 
-  console.log(year)
-
   useEffect(() => {
     setSelectedMonth(moment().year(year).month(0).date(1))
     setSelectedDay(moment().year(year).month(0).date(1))
@@ -24,6 +22,16 @@ const Calendar = ({ isEditable, year, planningSession }) => {
     const targetDate = moment({ year, month, date: day });
 
     return targetDate.day() === 0 || targetDate.day() === 6;
+  }
+
+  const getNationalFreeDay = day => {
+    const nationalFreeDays = planningSession.nationalFreeDays
+
+    const year = selectedMonth.year()
+    const month = selectedMonth.month()
+    const targetDate = moment({ year, month, date: day });
+
+    return nationalFreeDays.find(nfd => nfd.date === targetDate.format('YYYY-MM-DD'))
   }
 
   const firstDayOfMonth = useCallback(() => {
@@ -50,19 +58,26 @@ const Calendar = ({ isEditable, year, planningSession }) => {
   const getMonthDays = useCallback(() => {
     let daysInMonth = []
     for (let d = 1; d <= noDaysInMonth(); d++) {
+      const nationalFreeDay = getNationalFreeDay(d)
       daysInMonth.push(
         <td key={d} className={classNames({
           selected: isEditable && d.toString() === selectedDay.format('D') && selectedMonth.format('M Y') === selectedDay.format('M Y'),
-          weekend: isWeekendDay(d)
+          weekend: isWeekendDay(d),
+          'national-free-day': !!nationalFreeDay
         })}>
           <div className='calendar-day-wrapper' onClick={isEditable && (() => setSelectedDay(moment(selectedMonth.date(d)))) }>
-            <div className='calendar-day'>
-              <div className='calendar-day-circle'>
+            <div className='calendar-day-header'>
+              <div className='calendar-day'>
                 {d}
               </div>
+              {nationalFreeDay && (
+                <div title={nationalFreeDay.name} className='national-free-day-name'>
+                  {nationalFreeDay.name}
+                </div>
+              )}
             </div>
-            <div className='calendar-day-events'>
-              <div className='calendar-day-event-list'>
+            <div className='vacation-day-people'>
+              <div className='vacation-day-people-list'>
               </div>
             </div>
           </div>
