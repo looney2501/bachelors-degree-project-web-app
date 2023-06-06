@@ -1,7 +1,8 @@
 import moment from 'moment'
+import 'moment/locale/ro'
 
 export const getWeekdaysShort = () => {
-  moment.updateLocale('en', {
+  moment.updateLocale('ro', {
     week: {
       dow : 1, // Monday is the first day of the week.
     }

@@ -4,7 +4,7 @@ import React from 'react'
 const LoadingScreen = () => (
   <div className="loading-page">
     <div className="center">
-      <Preloader use={Bars} size={60} strokeWidth={10} strokeColor="#f7b085" duration={600}/>
+      <Preloader use={Bars} size={60} strokeWidth={10} strokeColor="#ffffff" duration={600}/>
     </div>
   </div>
 )

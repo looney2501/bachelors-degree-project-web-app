@@ -146,7 +146,7 @@ const ManagerDashboardPage = () => {
         <div className="row flex-grow-1">
           <div className="col-4 h-100 d-flex flex-column justify-content-center">
             <div className="d-flex justify-content-center">
-              <p className="h3 mb-0 mx-4 lh-base text-right">Selectati anul</p>
+              <p className="h3 mb-0 mx-4 lh-base text-right">Selectați anul</p>
               <select className="form-select year-form-select" onChange={handleYearSelect}>
                 <option disabled>Alegeti Anul</option>
                 {allYears && allYears.map(y => (
