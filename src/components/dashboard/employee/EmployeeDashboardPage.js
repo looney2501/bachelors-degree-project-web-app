@@ -80,7 +80,7 @@ const EmployeeDashboardPage = () => {
                 className="btn btn-primary btn-md"
                 onClick={handleViewPlanning}
               >
-                Vizualizați Planificare
+                Vizualizați planificare
               </button>
             </div>
           </div>

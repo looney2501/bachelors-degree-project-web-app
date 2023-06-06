@@ -8,30 +8,47 @@ import classNames from 'classnames'
 const Calendar = ({ isEditable, year, planningSession }) => {
   const weekdaysShort = useMemo(() => getWeekdaysShort(), [])
 
-  const [selectedDay, setSelectedDay] = useState(moment())
-  const [selectedMonth, setSelectedMonth] = useState(moment())
+  const [selectedDay, setSelectedDay] = useState(null)
+  const [selectedMonth, setSelectedMonth] = useState(null)
 
   useEffect(() => {
     setSelectedMonth(moment().year(year).month(0).date(1))
     setSelectedDay(moment().year(year).month(0).date(1))
   }, [])
 
+  const daysToUsersVacations = useMemo(() => {
+    if (planningSession?.vacations) {
+      let daysToUsersVacations = {}
+
+      planningSession.vacations.forEach(v => {
+        const user = v.user
+
+        v.freeDays.forEach(fd => {
+          if (!daysToUsersVacations[fd]) {
+            daysToUsersVacations[fd] = [user]
+          } else {
+            daysToUsersVacations[fd].push(user)
+          }
+        })
+      })
+
+      return daysToUsersVacations
+    }
+    return null
+  }, [planningSession])
+
   const isWeekendDay = (day) => {
     const year = selectedMonth.year()
     const month = selectedMonth.month()
-    const targetDate = moment({ year, month, date: day });
+    const targetDate = moment({ year, month, date: day })
 
-    return targetDate.day() === 0 || targetDate.day() === 6;
+    return targetDate.day() === 0 || targetDate.day() === 6
   }
 
-  const getNationalFreeDay = day => {
+  const getNationalFreeDay = date => {
     const nationalFreeDays = planningSession.nationalFreeDays
 
-    const year = selectedMonth.year()
-    const month = selectedMonth.month()
-    const targetDate = moment({ year, month, date: day });
-
-    return nationalFreeDays.find(nfd => nfd.date === targetDate.format('YYYY-MM-DD'))
+    return nationalFreeDays.find(nfd => nfd.date === date)
   }
 
   const firstDayOfMonth = useCallback(() => {
@@ -56,35 +73,64 @@ const Calendar = ({ isEditable, year, planningSession }) => {
   }, [selectedMonth])
 
   const getMonthDays = useCallback(() => {
-    let daysInMonth = []
-    for (let d = 1; d <= noDaysInMonth(); d++) {
-      const nationalFreeDay = getNationalFreeDay(d)
-      daysInMonth.push(
-        <td key={d} className={classNames({
-          selected: isEditable && d.toString() === selectedDay.format('D') && selectedMonth.format('M Y') === selectedDay.format('M Y'),
-          weekend: isWeekendDay(d),
-          'national-free-day': !!nationalFreeDay
-        })}>
-          <div className='calendar-day-wrapper' onClick={isEditable && (() => setSelectedDay(moment(selectedMonth.date(d)))) }>
-            <div className='calendar-day-header'>
-              <div className='calendar-day'>
-                {d}
-              </div>
-              {nationalFreeDay && (
-                <div title={nationalFreeDay.name} className='national-free-day-name'>
-                  {nationalFreeDay.name}
+    if (selectedMonth && selectedDay) {
+      let daysInMonth = []
+      for (let d = 1; d <= noDaysInMonth(); d++) {
+        const fullDateString = moment({
+          year: selectedMonth.year(),
+          month: selectedMonth.month(),
+          date: d
+        }).format('YYYY-MM-DD')
+        const nationalFreeDay = getNationalFreeDay(fullDateString)
+
+        daysInMonth.push(
+          <td key={d} className={classNames({
+            selected: isEditable && d.toString() === selectedDay.format('D') && selectedMonth.format('M Y') === selectedDay.format('M Y'),
+            weekend: isWeekendDay(d),
+            'national-free-day': !!nationalFreeDay
+          })}>
+            <div className="calendar-day-wrapper"
+                 onClick={isEditable && (() => setSelectedDay(moment(selectedMonth.date(d))))}>
+              <div className="calendar-day-header">
+                <div className="calendar-day">
+                  {d}
                 </div>
-              )}
-            </div>
-            <div className='vacation-day-people'>
-              <div className='vacation-day-people-list'>
+                {nationalFreeDay && (
+                  <div title={nationalFreeDay.name} className="national-free-day-name">
+                    {nationalFreeDay.name}
+                  </div>
+                )}
+              </div>
+              <div className="vacation-day-people">
+                <div className="vacation-day-people-list">
+                  {daysToUsersVacations[fullDateString] && (
+                    <>
+                      {daysToUsersVacations[fullDateString].slice(0, 2).map(u => (
+                        <div title={`${u.firstName} ${u.lastName}`} className="vacation-day-person">
+                          {`${u.firstName} ${u.lastName}`}
+                        </div>
+                      ))}
+                      {daysToUsersVacations[fullDateString].slice(2).length > 0 && (
+                        <div
+                          title={daysToUsersVacations[fullDateString].slice(2).reduce((message, u, i, a) => {
+                            message += `${u.firstName} ${u.lastName}`
+                            return i !== a.length - 1 ? message + ',' : message
+                          }, '')}
+                          className="calendar-day-more-events">
+                          +{daysToUsersVacations[fullDateString].length - 2}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </td>
-      )
+          </td>
+        )
+      }
+      return daysInMonth
     }
-    return daysInMonth
+
   }, [selectedMonth, selectedDay])
 
   const getAfterBlankDays = useCallback(() => {
@@ -106,7 +152,7 @@ const Calendar = ({ isEditable, year, planningSession }) => {
     for (let i = 0; i < 6; i++) {
       rows.push(totalSlots.slice(i * 7, (i + 1) * 7))
     }
-    let i = 0;
+    let i = 0
     return (
       <>
         {rows.map(row => {
@@ -121,18 +167,19 @@ const Calendar = ({ isEditable, year, planningSession }) => {
 
   return (
     <div id="Calendar" className="d-flex flex-column table-container bg-body rounded shadow-sm p-3 h-100">
-      <div className='calendar-header'>
-        <button className="btn btn-outline-primary" onClick={() => setSelectedMonth(moment(selectedMonth.subtract(1, 'M')))}>
-          <SlArrowLeft className='prev-month-button' />
+      <div className="calendar-header">
+        <button className="btn btn-outline-primary"
+                onClick={() => setSelectedMonth(moment(selectedMonth.subtract(1, 'M')))}>
+          <SlArrowLeft className="prev-month-button"/>
         </button>
-        <div className='selected-month'>
-          {selectedMonth.format('MMMM YYYY')}
+        <div className="selected-month">
+          {selectedMonth && selectedMonth.format('MMMM YYYY')}
         </div>
         <button className="btn btn-outline-primary" onClick={() => setSelectedMonth(moment(selectedMonth.add(1, 'M')))}>
-          <SlArrowRight className='next-month-button' />
+          <SlArrowRight className="next-month-button"/>
         </button>
       </div>
-      <table className='calendar-table'>
+      <table className="calendar-table">
         <thead>
         <tr>
           {weekdaysShort.map(day => {
@@ -146,7 +193,7 @@ const Calendar = ({ isEditable, year, planningSession }) => {
         </tr>
         </thead>
         <tbody>
-        {getCalendarSlots()}
+        {selectedDay && selectedMonth && getCalendarSlots()}
         </tbody>
       </table>
     </div>
