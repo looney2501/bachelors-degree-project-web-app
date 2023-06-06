@@ -7,6 +7,7 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.response.use(function (response) {
+  response.data = deserialize(response.data)
   if (response.config.url === '/auth/sign_in' && response.headers['access-token']) {
     const authHeaders = {
       'access-token': response.headers['access-token'],
@@ -15,7 +16,6 @@ axiosInstance.interceptors.response.use(function (response) {
     }
     localStorage.setItem('vacations_planner', JSON.stringify({ authHeaders, currentUser: { ...response.data.data } }))
   }
-  response.data = deserialize(response.data)
   return response
 }, function (error) {
   return Promise.reject(error)

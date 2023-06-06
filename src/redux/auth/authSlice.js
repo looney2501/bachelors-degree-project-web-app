@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { signIn } from './authActions'
+import { updateUser } from '../users/usersActions'
 
 const initialState = {
   isLoading: false,
@@ -25,6 +26,12 @@ const authSlice = createSlice({
       state.isLoading = false
       state.error = payload
     },
+    // Update current user
+    [updateUser.fulfilled]: (state, { payload }) => {
+      if (state.currentUser.id === payload.user.id) {
+        state.currentUser = payload.user
+      }
+    }
   },
 })
 

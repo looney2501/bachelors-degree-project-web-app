@@ -25,6 +25,12 @@
     font-weight: 600;
     margin-bottom: 7px;
 }
+.profile-usertitle-email {
+    color: var(--bs-gray);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
 
 .profile-usertitle-job {
     text-transform: uppercase;

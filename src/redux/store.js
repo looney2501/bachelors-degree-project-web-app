@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './auth/authSlice'
 import planningSessionsReducer from './planningSessions/planningSessionsSlice'
+import usersReducer from './users/usersSlice'
 
 const getPersistedState = () => {
   try {
@@ -24,6 +25,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     planningSessions: planningSessionsReducer,
+    users: usersReducer,
   },
   preloadedState: selectState()
 })
