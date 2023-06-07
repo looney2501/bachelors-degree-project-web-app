@@ -7,12 +7,25 @@ export const updateUser = createAsyncThunk(
   'users/updateUser',
   async (userData, { rejectWithValue }) => {
     try {
+      const formData = new FormData()
+      for (const k in userData) {
+
+        formData.append(k, userData[k])
+      }
+      if (!userData.avatar) {
+        formData.delete('avatar')
+      }
+
       const { data } = await axiosInstance.put(
         `${baseUrl}/${userData.id}`,
-        userData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
       )
 
-      console.log(data)
       return data
     } catch (error) {
       if (error.response && error.response.data) {

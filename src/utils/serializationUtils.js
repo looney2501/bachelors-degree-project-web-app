@@ -12,6 +12,14 @@ const transform = (obj, transform_fn) => {
     return obj.map((obj) => transform(obj, transform_fn))
   }
 
+  if (obj instanceof FormData) {
+    const newFormData = new FormData()
+    for (let [key, value] of obj.entries()) {
+      newFormData.append(transform_fn(key), value)
+    }
+    return newFormData
+  }
+
   if (typeof obj === 'object') {
     return Object.entries(obj).reduce((acc, [k, v]) => ({
       ...acc,

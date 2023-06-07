@@ -3,7 +3,7 @@ import '../../assets/css/profile.css'
 import dashboardLayout from '../layout/dashboardLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../redux/users/usersActions'
-import { current } from '@reduxjs/toolkit'
+import profilePictureMock from '../../assets/images/profile-pic-mock.jpg'
 
 const ProfilePage = () => {
   const dispatch = useDispatch()
@@ -13,8 +13,10 @@ const ProfilePage = () => {
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    role: ''
+    role: '',
+    avatar: null,
   })
+  const [photoUrl, setPhotoUrl] = useState('')
 
   useEffect(() => {
     if (user) {
@@ -23,6 +25,7 @@ const ProfilePage = () => {
         lastName: user.lastName,
         phoneNumber: user.phoneNumber,
         role: user.role,
+        avatar: null
       })
     }
   }, [user])
@@ -50,12 +53,9 @@ const ProfilePage = () => {
           <div className="profile-sidebar">
             <div className="my-3 p-3 bg-body rounded shadow-sm">
 
-              {/* <!-- SIDEBAR USERPIC --> */}
               <div className="profile-userpic">
-                <img src="https://via.placeholder.com/150" className="img-responsive profile-img-center" alt=""/>
+                <img src={profilePictureMock} className="img-responsive profile-img-center" alt=""/>
               </div>
-              {/* <!-- END SIDEBAR USERPIC -->
-                            <!-- SIDEBAR USER TITLE --> */}
               <div className="profile-usertitle">
                 <div className="profile-usertitle-name">
                   {user?.firstName} {user?.lastName}

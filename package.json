@@ -10,6 +10,7 @@
     "moment": "^2.29.4",
     "sass": "^1.62.1",
     "prop-types": "^15.8.1",
+    "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.0",
     "react-content-loader": "^6.1.0",
