@@ -11,7 +11,7 @@ export const createNewVacationRequest = createAsyncThunk(
         baseUrl,
         {
           planningSessionId,
-          preferredIntervals
+          requestedIntervals: preferredIntervals
         }
       )
     } catch (error) {
