@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react'
 import dashboardLayout from '../../layout/dashboardLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  getPlanningSessionAllVacationsByYear,
   getPlanningSessionsAllYears,
-  getPlanningSessionAllVacationsByYear, getPlanningSessionThinByYear
+  getPlanningSessionThinByYear
 } from '../../../redux/planningSessions/planningSessionsActions'
 
 import Calendar from '../../calendar/Calendar'
@@ -49,7 +50,7 @@ const EmployeeDashboardPage = () => {
 
   return (
     <>
-      <NewVacationRequestModal id="vacationRequestModal" />
+      <NewVacationRequestModal id="vacationRequestModal"/>
       <div id="employeeDashboardPage" className="h-100 d-flex flex-column">
         {nextYearNewRequestMessage && (
           <div className="row">
@@ -68,9 +69,11 @@ const EmployeeDashboardPage = () => {
               <p className="h3 mb-0 mx-4 lh-base text-right">Selectați anul</p>
               <select className="form-select year-form-select" onChange={handleYearSelect}>
                 <option disabled>Alegeti Anul</option>
-                {allYears && allYears.map(y => (
-                  <option key={y} value={y}>{y}</option>
-                ))
+                {allYears && allYears
+                  .filter((y, i) => i === 0 ? hasRequested : true)
+                  .map((y, i) => (
+                    <option key={y} value={y}>{y}</option>
+                  ))
                 }
               </select>
             </div>
