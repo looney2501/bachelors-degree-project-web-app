@@ -2,10 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react'
 import dashboardLayout from '../../layout/dashboardLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  getPlanningSessionsAllYears,
-  getPlanningSessionAllVacationsByYear, generateVacationsSchedule
+  generateVacationsSchedule,
+  getPlanningSessionAllVacationsByYear,
+  getPlanningSessionsAllYears
 } from '../../../redux/planningSessions/planningSessionsActions'
-import EmployeesTable from './EmployeesTable'
 import Calendar from '../../calendar/Calendar'
 import moment from 'moment'
 import NewPlanningSessionModal from '../../modal/NewPlanningSessionModal'
@@ -15,86 +15,6 @@ const ManagerDashboardPage = () => {
   const allYears = useSelector(state => state.planningSessions.years)
   const planningSession = useSelector(state => state.planningSessions.planningSession)
   const isGenerated = useSelector(state => state.planningSessions.isGenerated)
-  const employees = useMemo(() => [
-    {
-      id: 1,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 2,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 3,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 4,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 5,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 6,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 7,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 8,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 9,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 10,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 11,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 12,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-    {
-      id: 13,
-      first_name: 'Alex',
-      last_name: 'Pop',
-      email: 'alex.pop@email.com',
-    },
-  ], [])
 
   const [selectedYear, setSelectedYear] = useState()
 
@@ -164,9 +84,35 @@ const ManagerDashboardPage = () => {
                 Vizualizați planificare
               </button>
             </div>
-            <div className="mt-4 d-flex justify-content-center">
-              <EmployeesTable employees={employees}/>
-            </div>
+            {planningSession?.restrictionIntervals && (
+              <div className="mt-4 d-flex justify-content-center">
+                <div className="bg-body rounded shadow-sm p-3 overflow-auto">
+                  <h5 className="pb-2 m-0 text-default">Intervale de restricție</h5>
+                  <div className="employees-table table-container overflow-auto">
+                    <div className="d-flex text-muted overflow-auto">
+                      <table className="table overflow-auto">
+                        <thead>
+                        <tr>
+                          <th>Dată început</th>
+                          <th>Dată final</th>
+                          <th>Max. concedii</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {planningSession.restrictionIntervals.map((i) => (
+                          <tr>
+                            <td>{i.startDate}</td>
+                            <td>{i.endDate}</td>
+                            <td style={{ textAlign: 'center' }}>{i.availableOverlappingPlannings}</td>
+                          </tr>
+                        ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <div className="col-8 h-100 d-flex flex-column justify-content-center">
             {selectedYear && planningSession?.vacations ?
