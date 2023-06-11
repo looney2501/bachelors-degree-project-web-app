@@ -45,23 +45,23 @@ const RestrictionIntervalsPicker = ({ intervals, setIntervals }) => {
           <div key={i} className="row mb-3">
             <div className="col-4">
               <label className="form-label form-label-small">Dată început</label>
-              <input className="form-control" type="date" value={interval.startDate}
+              <input id="startDateInput" className="form-control" type="date" value={interval.startDate}
                      onChange={e => handleDateChange(e, i, 'startDate')}/>
             </div>
             <div className="col-4">
               <label className="form-label form-label-small">Dată final</label>
-              <input className="form-control" type="date" value={interval.endDate}
+              <input id="endDateInput" className="form-control" type="date" value={interval.endDate}
                      onChange={e => handleDateChange(e, i, 'endDate')}/>
             </div>
             <div className="col-3">
               <label className="form-label form-label-small">Max concedii</label>
-              <input className="form-control" type="number" value={interval.availableOverlappingPlannings}
+              <input id="availableOverlappingPlanningsInput" className="form-control" type="number" value={interval.availableOverlappingPlannings}
                      onChange={e => handleRestrictionNumberChange(e, i)}/>
             </div>
             {i === intervals.length-1 && (
               <div className="col-1 d-flex flex-column align-items-end justify-content-around">
                 <button type="button" className="btn-close" onClick={() => handleRemoveRestrictionInterval()}/>
-                <button type="button" className="btn-add" onClick={() => handleAddRestrictionInterval()}/>
+                <button id="addRestrictionIntervalButton" type="button" className="btn-add" onClick={() => handleAddRestrictionInterval()}/>
               </div>
             )}
           </div>

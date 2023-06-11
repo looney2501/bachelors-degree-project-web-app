@@ -23,7 +23,7 @@ const PreferredIntervalsPicker = ({ intervals, setIntervals }) => {
     ])
   }
 
-  const handleAddRestrictionInterval = () => {
+  const handleAddPreferredInterval = () => {
     setIntervals([
       ...intervals,
       {
@@ -65,7 +65,7 @@ const PreferredIntervalsPicker = ({ intervals, setIntervals }) => {
             </div>
             {i === intervals.length - 1 && (
               <div className="col-1 d-flex flex-column align-items-end justify-content-center">
-                <button type="button" className="btn-add" onClick={() => handleAddRestrictionInterval()}/>
+                <button id="addPreferredIntervalButton" type="button" className="btn-add" onClick={() => handleAddPreferredInterval()}/>
               </div>
             )}
           </div>

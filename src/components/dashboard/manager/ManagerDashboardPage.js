@@ -56,7 +56,7 @@ const ManagerDashboardPage = () => {
           <div className="row">
             <div className="alert alert-primary alert-dismissible fade show" role="alert">
               Este momentul planificării concediilor pentru anul urmator! Click
-              <span data-bs-toggle="modal" data-bs-target="#initialisePlanningSessionModal"
+              <span id='initialisePlannningSessionButton' data-bs-toggle="modal" data-bs-target="#initialisePlanningSessionModal"
                     className="alert-link" role="button"> aici </span>
               pentru a inițializa o nouă sesiune de planificări de concedii.
               <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -77,6 +77,7 @@ const ManagerDashboardPage = () => {
             </div>
             <div className="mt-4 d-flex justify-content-center">
               <button
+                id="viewPlanningButton"
                 type="button"
                 className="btn btn-primary btn-md"
                 onClick={handleViewPlanning}
@@ -123,6 +124,7 @@ const ManagerDashboardPage = () => {
                   <p className="h3 text-center">Planificarea nu a fost încă generată!</p>
                   <div className="mt-4 d-flex justify-content-center">
                     <button
+                      id="generatePlanningButton"
                       type="button"
                       className="btn btn-primary btn-md"
                       onClick={handleGeneratePlanning}

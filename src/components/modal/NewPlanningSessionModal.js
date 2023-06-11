@@ -1,5 +1,5 @@
 import ModalComponent from './ModalComponent'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import RestrictionIntervalsPicker from './RestrictionIntervalsPicker'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
@@ -56,7 +56,7 @@ const NewPlanningSessionModal = (props) => {
   const modalFooterContent = () => {
     return <>
       <div className="w-100 d-flex justify-content-between">
-        <button type="submit" className="btn btn-primary" onClick={handleSaveNewPlanningSession}>Salvează</button>
+        <button id="createPlanningSessionButton" type="submit" className="btn btn-primary" onClick={handleSaveNewPlanningSession}>Salvează</button>
         {clicked && (
           <StatusMessage isLoading={isLoading} error={error}/>
         )}

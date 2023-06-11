@@ -64,7 +64,7 @@ const NewVacationRequestModal = (props) => {
   const modalFooterContent = () => {
     return <>
       <div className="w-100 d-flex justify-content-between">
-        <button type="submit" className="btn btn-primary" onClick={handleSaveNewPlanningSession}>Salvează</button>
+        <button id="createRequestButton" type="submit" className="btn btn-primary" onClick={handleSaveNewPlanningSession}>Salvează</button>
         {clicked && (
           <StatusMessage isLoading={isLoading} error={error}/>
         )}

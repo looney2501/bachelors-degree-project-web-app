@@ -56,7 +56,7 @@ const EmployeeDashboardPage = () => {
           <div className="row">
             <div className="alert alert-primary alert-dismissible fade show" role="alert">
               Este momentul planificării concediilor pentru anul urmator! Click
-              <span data-bs-toggle="modal" data-bs-target="#vacationRequestModal"
+              <span id="initializeRequestVacation" data-bs-toggle="modal" data-bs-target="#vacationRequestModal"
                     className="alert-link" role="button"> aici </span>
               pentru a realiza o cerere de planificare de concediu.
               <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
