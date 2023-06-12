@@ -5,6 +5,7 @@ import {
   getPlanningSessionsAllYears, getPlanningSessionThinByYear
 } from './planningSessionsActions'
 import { createNewVacationRequest } from './vacationRequestsActions'
+import { updateVacationPlannedDays } from '../vacations/vacationActions'
 
 const initialState = {
   isLoading: false,
@@ -75,7 +76,7 @@ const planningSessionsSlice = createSlice({
       state.isLoading = true
     },
     [generateVacationsSchedule.fulfilled]: (state, { payload }) => {
-      state.isLoading = true
+      state.isLoading = false
       state.planningSession = payload.planningSession
       state.isGenerated = payload.planningSession.vacations.length > 0
     }

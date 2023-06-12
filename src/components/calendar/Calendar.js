@@ -4,38 +4,63 @@ import { getWeekdaysShort } from '../../utils/calendarUtils'
 import '../../assets/css/Calendar.scss'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
 import classNames from 'classnames'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateVacationPlannedDays } from '../../redux/vacations/vacationActions'
 
 const Calendar = ({ isEditable, year, planningSession }) => {
+  const dispatch = useDispatch()
+
   const weekdaysShort = useMemo(() => getWeekdaysShort(), [])
 
   const [selectedDay, setSelectedDay] = useState(null)
   const [selectedMonth, setSelectedMonth] = useState(null)
+  const [editMode, setEditMode] = useState(false)
+  const [remainingDays, setRemainingDays] = useState(0)
+  const [daysToUsersVacations, setDaysToUsersVacations] = useState(null)
+  const [showRemainingDaysError, setShowRemainingDaysError] = useState(false)
+
+  const currentUser = useSelector(state => state.auth.currentUser)
+  const vacationsError = useSelector(state => state.vacations.error)
 
   useEffect(() => {
     setSelectedMonth(moment().year(year).month(0).date(1))
     setSelectedDay(moment().year(year).month(0).date(1))
   }, [])
 
-  const daysToUsersVacations = useMemo(() => {
-    if (planningSession?.vacations) {
-      let daysToUsersVacations = {}
+  useEffect(() => {
+    if (vacationsError) {
+      const daysToUsersVacations = generateDaysToUsersVacations()
 
-      planningSession.vacations.forEach(v => {
-        const user = v.user
-
-        v.freeDays.forEach(fd => {
-          if (!daysToUsersVacations[fd]) {
-            daysToUsersVacations[fd] = [user]
-          } else {
-            daysToUsersVacations[fd].push(user)
-          }
-        })
-      })
-
-      return daysToUsersVacations
+      setDaysToUsersVacations(daysToUsersVacations)
     }
-    return null
-  }, [planningSession])
+  }, [vacationsError])
+
+  useEffect(() => {
+    if (!daysToUsersVacations && planningSession?.vacations) {
+      const daysToUsersVacations = generateDaysToUsersVacations()
+
+      setDaysToUsersVacations(daysToUsersVacations)
+    }
+
+  }, [planningSession?.vacations])
+
+  const generateDaysToUsersVacations = useCallback(() => {
+    let daysToUsersVacations = {}
+
+    planningSession.vacations.forEach(v => {
+      const user = v.user
+
+      v.freeDays.forEach(fd => {
+        if (!daysToUsersVacations[fd]) {
+          daysToUsersVacations[fd] = [user]
+        } else {
+          daysToUsersVacations[fd].push(user)
+        }
+      })
+    })
+
+    return daysToUsersVacations
+  }, [planningSession?.vacations])
 
   const isWeekendDay = (day) => {
     const year = selectedMonth.year()
@@ -82,11 +107,12 @@ const Calendar = ({ isEditable, year, planningSession }) => {
           date: d
         }).format('YYYY-MM-DD')
         const nationalFreeDay = getNationalFreeDay(fullDateString)
+        const weekendDay = isWeekendDay(d)
 
         daysInMonth.push(
           <td key={d} className={classNames({
             selected: isEditable && d.toString() === selectedDay.format('D') && selectedMonth.format('M Y') === selectedDay.format('M Y'),
-            weekend: isWeekendDay(d),
+            weekend: weekendDay,
             'national-free-day': !!nationalFreeDay
           })}>
             <div className="calendar-day-wrapper"
@@ -106,7 +132,7 @@ const Calendar = ({ isEditable, year, planningSession }) => {
                   {daysToUsersVacations[fullDateString] && (
                     <>
                       {daysToUsersVacations[fullDateString].slice(0, 2).map(u => (
-                        <div title={`${u.firstName} ${u.lastName}`} className="vacation-day-person">
+                        <div key={d} title={`${u.firstName} ${u.lastName}`} className="vacation-day-person">
                           {`${u.firstName} ${u.lastName}`}
                         </div>
                       ))}
@@ -124,6 +150,22 @@ const Calendar = ({ isEditable, year, planningSession }) => {
                   )}
                 </div>
               </div>
+              {editMode
+                && (daysToUsersVacations[fullDateString] ? (
+                  <div className="edit-action-wrapper">
+                    <button onClick={() => handleDeleteDay(fullDateString)}
+                            className="btn btn-outline-danger p-0 d-block w-100">
+                      <i className="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete
+                    </button>
+                  </div>
+                ) : remainingDays > 0 && !weekendDay && !nationalFreeDay && (
+                  <div className="edit-action-wrapper">
+                    <button onClick={() => handleAddDay(fullDateString, currentUser)}
+                            className="btn btn-outline-primary p-0 d-block w-100">
+                      <i className="fa fa-calendar" aria-hidden="true"></i>&nbsp;Add
+                    </button>
+                  </div>
+                ))}
             </div>
           </td>
         )
@@ -131,7 +173,7 @@ const Calendar = ({ isEditable, year, planningSession }) => {
       return daysInMonth
     }
 
-  }, [selectedMonth, selectedDay])
+  }, [selectedMonth, selectedDay, editMode, daysToUsersVacations])
 
   const getAfterBlankDays = useCallback(() => {
     let blanks = []
@@ -163,10 +205,69 @@ const Calendar = ({ isEditable, year, planningSession }) => {
         }
       </>
     )
-  }, [selectedMonth, selectedDay])
+  }, [selectedMonth, selectedDay, editMode, daysToUsersVacations])
+
+  const handleSwitchEditMode = () => {
+    if (editMode) {
+      console.log('pl')
+      if (remainingDays > 0) {
+        console.log('pl')
+        setShowRemainingDaysError(true)
+      } else {
+        setShowRemainingDaysError(false)
+        dispatch(updateVacationPlannedDays({
+          planningSessionId: planningSession.id,
+          userId: currentUser.id,
+          freeDays: Object.keys(daysToUsersVacations)
+        }))
+        setEditMode((prevState) => setEditMode(!prevState))
+      }
+    } else {
+      setEditMode((prevState) => setEditMode(!prevState))
+    }
+  }
+
+  const handleDeleteDay = (day) => {
+    setDaysToUsersVacations(prevState => {
+      const newState = { ...prevState }
+      delete newState[day]
+
+      return newState
+    })
+    setRemainingDays(prevState => prevState + 1)
+  }
+
+  const handleAddDay = (day, user) => {
+    setDaysToUsersVacations(prevState => ({
+      ...prevState,
+      [day]: [user]
+    }))
+    setRemainingDays(prevState => prevState - 1)
+  }
 
   return (
     <div id="Calendar" className="d-flex flex-column table-container bg-body rounded shadow-sm p-3 h-100">
+      {isEditable && (
+        <div className="d-flex justify-content-between calendar-edit-header">
+          <div className="mb-3 form-check form-switch">
+            <input onChange={handleSwitchEditMode} checked={editMode} className="form-check-input" type="checkbox"
+                   role="switch"
+                   id="editModeSwitchCheckbox"/>
+            <label className="form-check-label" htmlFor="editModeSwitchCheckbox">Switch
+              to {editMode ? 'view' : 'edit'} mode</label>
+          </div>
+          {editMode && showRemainingDaysError && (
+            <div className="text-danger">
+              Mai există zile neasignate
+            </div>
+          )}
+          {editMode && (
+            <div>
+              Remaining Days: {remainingDays}
+            </div>
+          )}
+        </div>
+      )}
       <div className="calendar-header">
         <button className="btn btn-outline-primary"
                 onClick={() => setSelectedMonth(moment(selectedMonth.subtract(1, 'M')))}>
@@ -175,7 +276,8 @@ const Calendar = ({ isEditable, year, planningSession }) => {
         <div className="selected-month">
           {selectedMonth && selectedMonth.format('MMMM YYYY')}
         </div>
-        <button className="btn btn-outline-primary" onClick={() => setSelectedMonth(moment(selectedMonth.add(1, 'M')))}>
+        <button className="btn btn-outline-primary"
+                onClick={() => setSelectedMonth(moment(selectedMonth.add(1, 'M')))}>
           <SlArrowRight className="next-month-button"/>
         </button>
       </div>

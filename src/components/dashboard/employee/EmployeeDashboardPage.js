@@ -102,7 +102,7 @@ const EmployeeDashboardPage = () => {
                         </thead>
                         <tbody>
                         {planningSession.requestedIntervals.map((i) => (
-                          <tr>
+                          <tr key={i}>
                             <td>{i.startDate}</td>
                             <td>{i.endDate}</td>
                             <td style={{ textAlign: 'center' }}>{i.importanceLevel}</td>
@@ -119,7 +119,7 @@ const EmployeeDashboardPage = () => {
           <div className="col-8 h-100 d-flex flex-column justify-content-center">
             {selectedYear && planningSession?.vacations ?
               isGenerated ? (
-                <Calendar year={selectedYear} planningSession={planningSession}/>
+                <Calendar year={selectedYear} planningSession={planningSession} isEditable />
               ) : (
                 <div className="">
                   <p className="h3 text-center">Planificarea nu a fost încă generată!</p>

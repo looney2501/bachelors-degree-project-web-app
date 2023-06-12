@@ -1,5 +1,9 @@
 @import "variables";
 
+.calendar-edit-header {
+  color: var(--blue-dark)
+}
+
 .calendar-header {
   width: 100%;
   display: flex;
@@ -8,14 +12,13 @@
   .prev-month-button, .next-month-button {
     margin: 2px;
     cursor: pointer;
-    color: var(--blue-dark);
   }
 
   .selected-month {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--blue-dark);
+    color: var(--blue-normal);
     font-size: 18px;
     font-weight: bold;
   }
@@ -105,6 +108,10 @@
               text-align: right;
             }
           }
+
+          .edit-action-wrapper > button {
+            font-size: 13px !important;
+          }
         }
       }
 
@@ -120,18 +127,6 @@
           border: solid 2px var(--blue-normal);
           border-radius: 50%;
           text-align: center;
-        }
-      }
-
-      td.selected {
-        background-color: var(--grey);
-
-        .calendar-day {
-          color: var(--white);
-
-          .calendar-day-circle {
-            border-color: var(--white);
-          }
         }
       }
 
