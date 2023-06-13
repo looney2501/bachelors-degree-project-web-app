@@ -89,7 +89,10 @@ const EmployeeDashboardPage = () => {
             {planningSession?.requestedIntervals && (
               <div className="mt-4 d-flex justify-content-center">
                 <div className="bg-body rounded shadow-sm p-3 overflow-auto">
-                  <h5 className="pb-2 m-0 text-default">Intervale preferate</h5>
+                  <div className="d-flex justify-content-between">
+                    <h5 className="pb-2 m-0 text-default">Intervale preferate</h5>
+                    <p className="pb-2 m-0 text-default text-wrap">{planningSession?.availableFreeDays} zile libere</p>
+                  </div>
                   <div className="employees-table table-container overflow-auto">
                     <div className="d-flex text-muted overflow-auto">
                       <table className="table overflow-auto">

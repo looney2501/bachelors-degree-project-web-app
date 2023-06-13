@@ -132,7 +132,7 @@ const Calendar = ({ isEditable, year, planningSession }) => {
                   {daysToUsersVacations[fullDateString] && (
                     <>
                       {daysToUsersVacations[fullDateString].slice(0, 2).map(u => (
-                        <div key={d} title={`${u.firstName} ${u.lastName}`} className="vacation-day-person">
+                        <div key={u.id} title={`${u.firstName} ${u.lastName}`} className="vacation-day-person">
                           {`${u.firstName} ${u.lastName}`}
                         </div>
                       ))}
