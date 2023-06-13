@@ -269,15 +269,27 @@ const Calendar = ({ isEditable, year, planningSession }) => {
         </div>
       )}
       <div className="calendar-header">
-        <button className="btn btn-outline-primary"
-                onClick={() => setSelectedMonth(moment(selectedMonth.subtract(1, 'M')))}>
+        <button
+          className="btn btn-outline-primary"
+          onClick={() => {
+            if (selectedMonth.month() !== 0) {
+              setSelectedMonth(moment(selectedMonth.subtract(1, 'M')))
+            }
+          }}
+        >
           <SlArrowLeft className="prev-month-button"/>
         </button>
         <div className="selected-month">
           {selectedMonth && selectedMonth.format('MMMM YYYY')}
         </div>
-        <button className="btn btn-outline-primary"
-                onClick={() => setSelectedMonth(moment(selectedMonth.add(1, 'M')))}>
+        <button
+          className="btn btn-outline-primary"
+          onClick={() => {
+            if (selectedMonth.month() !== 11) {
+              setSelectedMonth(moment(selectedMonth.add(1, 'M')))
+            }
+          }}
+        >
           <SlArrowRight className="next-month-button"/>
         </button>
       </div>
