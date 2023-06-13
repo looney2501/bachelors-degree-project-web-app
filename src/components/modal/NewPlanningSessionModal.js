@@ -68,7 +68,7 @@ const NewPlanningSessionModal = (props) => {
     <ModalComponent
       {...props}
       dataBsBackdrop="static"
-      title="Sesiune de planificari de concedii noua"
+      title="Sesiune de planificări de concedii nouă"
       content={modalContent()}
       footerContent={modalFooterContent()}
     />
