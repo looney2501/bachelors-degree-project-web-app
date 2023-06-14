@@ -1,7 +1,6 @@
 import 'font-awesome/css/font-awesome.min.css'
 import './assets/css/app.css'
 import ManagerDashboardPage from './components/dashboard/manager/ManagerDashboardPage'
-import TypographyPage from './components/TypographyPage'
 import LoginPage from './components/auth/LoginPage'
 import ProfilePage from './components/profile/ProfilePage'
 import { BrowserRouter as Router, Navigate, Outlet, Route, Routes } from 'react-router-dom'
@@ -27,10 +26,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route exact path="/" element={currentUser?.type === 'Manager' ? <ManagerDashboardPage /> : <EmployeeDashboardPage />}/>
           <Route exact path="/profile" element={<ProfilePage />}/>
-          <Route exact path="/blank-page" element={<TypographyPage />}/>
         </Route>
-
-        <Route exact path="/typography" element={<TypographyPage />}/>
       </Routes>
     </Router>
   )
