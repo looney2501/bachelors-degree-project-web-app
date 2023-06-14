@@ -5,7 +5,7 @@ import {
   getPlanningSessionsAllYears, getPlanningSessionThinByYear
 } from './planningSessionsActions'
 import { createNewVacationRequest } from './vacationRequestsActions'
-import { updateVacationPlannedDays } from '../vacations/vacationActions'
+import { logout } from '../auth/authSlice'
 
 const initialState = {
   isLoading: false,
@@ -21,6 +21,11 @@ const planningSessionsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // Log out
+    [logout]: (state) => {
+      state.planningSession = null
+    },
+
     // Get all years
     [getPlanningSessionsAllYears.fulfilled]: (state, { payload }) => {
       state.years = payload.years
