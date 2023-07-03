@@ -17,7 +17,6 @@ export function getAvailableDaysUsedNo(startDate, endDate, defaultFreeDays) {
   const defaultFreeDates = defaultFreeDays.map(day => day.date);
 
   while (currentDay.isSameOrBefore(endDate)) {
-    console.log(currentDay)
     const isDefaultFreeDay = defaultFreeDates.includes(currentDay.format('YYYY-MM-DD'));
     const isWeekend = currentDay.day() === 0 || currentDay.day() === 6;
 

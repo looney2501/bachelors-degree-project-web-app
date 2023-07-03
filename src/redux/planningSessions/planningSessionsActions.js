@@ -101,7 +101,6 @@ export const generateVacationsSchedule = createAsyncThunk(
   'planningSessions/generateVacationSchedule',
   async (id, { rejectWithValue }) => {
     try {
-      console.log(id)
       const { data } = await axiosInstance.post(
         `${baseUrl}/${id}/generate_vacations_schedule`
       )

@@ -209,9 +209,7 @@ const Calendar = ({ isEditable, year, planningSession }) => {
 
   const handleSwitchEditMode = () => {
     if (editMode) {
-      console.log('pl')
       if (remainingDays > 0) {
-        console.log('pl')
         setShowRemainingDaysError(true)
       } else {
         setShowRemainingDaysError(false)

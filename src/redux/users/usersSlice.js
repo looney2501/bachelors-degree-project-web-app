@@ -16,7 +16,6 @@ const usersSlice = createSlice({
       state.isLoading = true
     },
     [updateUser.fulfilled]: (state, { payload }) => {
-      console.log(payload)
       state.isLoading = false
     },
     [updateUser.rejected]: (state, { payload }) => {

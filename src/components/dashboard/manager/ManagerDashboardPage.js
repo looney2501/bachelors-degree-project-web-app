@@ -37,7 +37,6 @@ const ManagerDashboardPage = () => {
   }
 
   const handleGeneratePlanning = (_) => {
-    console.log(planningSession.id)
     dispatch(generateVacationsSchedule(planningSession.id))
   }
 
